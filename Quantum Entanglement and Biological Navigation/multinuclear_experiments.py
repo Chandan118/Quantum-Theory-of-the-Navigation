@@ -286,7 +286,7 @@ class MultiNuclearSimulator:
 
         return np.array(states)
 
-    def calculate_singlet_yield(self, states: np.ndarray,
+    def calculate_singlet_yield(self, states: np.ndarray, time_points: np.ndarray,
                                 recombination_rate: float = 1e7) -> np.ndarray:
         """
         Calculate time-integrated singlet yield

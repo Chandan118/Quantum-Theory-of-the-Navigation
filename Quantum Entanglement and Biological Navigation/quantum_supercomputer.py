@@ -192,7 +192,7 @@ class QiskitIntegration:
         except ImportError:
             return False
 
-    def create_radical_pair_circuit(self, n_nuclei: int = 0) -> 'QuantumCircuit':
+    def create_radical_pair_circuit(self, n_nuclei: int = 0):
         """
         Create radical pair circuit for Qiskit
         """
@@ -231,7 +231,7 @@ class QiskitIntegration:
 
         return qc
 
-    def create_vqe_circuit(self, ansatz: str = 'hardware_efficient') -> 'QuantumCircuit':
+    def create_vqe_circuit(self, ansatz: str = 'hardware_efficient'):
         """
         Create VQE ansatz circuit for ground state preparation
         """
