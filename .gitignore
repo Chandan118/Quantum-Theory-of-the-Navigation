@@ -13,3 +13,4 @@ results/
 .env
 venv/
 env/
+~$*.docx
