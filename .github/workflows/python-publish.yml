@@ -26,12 +26,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/chandan118/quantum-theory-of-the-navigation
           
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/chandan118/quantum-theory-of-the-navigation:latest
           labels: ${{ steps.meta.outputs.labels }}
