@@ -93,3 +93,12 @@ If this computational framework assists your research, please refer to the prima
 **Affiliation:** Beijing Institute of Technology (BIT).
 
 *Simulations were performed leveraging the Super-Engine Quantum Framework.*
+
+## ✨ Contributors
+
+Thanks goes to these wonderful people for their contributions to the project:
+
+<a href="https://github.com/Txinyan"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/133004102?v=4&h=60&w=60&fit=cover&mask=circle&maxage=7d" /></a>
+<a href="https://github.com/orange0131"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/143720894?v=4&h=60&w=60&fit=cover&mask=circle&maxage=7d" /></a>
+<a href="https://github.com/hhtbbc"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/254247411?v=4&h=60&w=60&fit=cover&mask=circle&maxage=7d" /></a>
+<a href="https://github.com/LTT-BIT"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/197918269?v=4&h=60&w=60&fit=cover&mask=circle&maxage=7d" /></a>
