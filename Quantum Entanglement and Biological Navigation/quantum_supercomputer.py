@@ -430,6 +430,22 @@ class MPSSimulator:
         return np.random.random()
 
 
+class COptimizedSimulator(QuantumPlatform):
+    """C-Optimized High-Performance State Vector Simulator"""
+    def __init__(self):
+        self.name = "C-Optimized Simulator"
+        self.available = True
+    def create_circuit(self, n_qubits: int) -> Circuit:
+        return Circuit(n_qubits)
+    def simulate(self, circuit: Circuit) -> np.ndarray:
+        return np.array([])
+    def create_radical_pair_circuit(self, n_nuclei: int = 0):
+        # The C accelerator handles the circuit execution intrinsically
+        return n_nuclei
+    def run_on_hardware(self, circuit: Circuit, shots: int = 1024) -> Dict:
+        return {}
+
+
 class HardwareBenchmark:
     """
     Benchmark quantum computing hardware
@@ -439,6 +455,13 @@ class HardwareBenchmark:
         self.platforms = {
             'tensor_network': TensorNetworkSimulator(),
         }
+
+        # Check for C accelerator
+        try:
+            import quantum_c_accelerator
+            self.platforms['c_accelerator'] = COptimizedSimulator()
+        except:
+            pass
 
         # Check for additional platforms
         try:
@@ -547,6 +570,10 @@ class HardwareBenchmark:
                     if name == 'cirq':
                         circuit = platform.create_radical_pair_circuit(n_nuclei)
                         state = platform.simulate(circuit)
+                    elif name == 'c_accelerator':
+                        import quantum_c_accelerator
+                        circuit_n_nuclei = platform.create_radical_pair_circuit(n_nuclei)
+                        state = np.array(quantum_c_accelerator.simulate_radical_pair(circuit_n_nuclei))
                     elif name == 'qiskit':
                         circuit = platform.create_radical_pair_circuit(n_nuclei)
                         # Simulate with Aer
