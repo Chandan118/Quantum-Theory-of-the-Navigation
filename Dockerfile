@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir build wheel
 RUN pip install -r requirements.txt
 RUN pip install .
 
-CMD ["python", "quantum_experiments/run_all_experiments.py"]
+CMD ["python", "Quantum Entanglement and Biological Navigation/run_experiments.py"]
