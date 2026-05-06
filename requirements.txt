@@ -1,0 +1,8 @@
+numpy
+scipy
+matplotlib
+qutip
+qiskit
+pandas
+seaborn
+networkx
