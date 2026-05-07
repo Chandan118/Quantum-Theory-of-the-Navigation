@@ -7,6 +7,7 @@
 [![Qiskit](https://img.shields.io/badge/Qiskit-Tested-6929C4.svg?style=for-the-badge&logo=qiskit&logoColor=white)](https://qiskit.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Chandan118/Quantum-Theory-of-the-Navigation/python-app.yml?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/Chandan118/Quantum-Theory-of-the-Navigation/actions)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20049835-blue.svg?style=for-the-badge)](https://doi.org/10.5281/zenodo.20049835)
 
 A high-resolution computational framework simulating the avian magnetoreception mechanism using **open quantum systems**, **entanglement dynamics**, and **quantum Fisher information**.
 
