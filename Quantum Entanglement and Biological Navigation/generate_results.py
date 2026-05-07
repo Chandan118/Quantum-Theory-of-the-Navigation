@@ -112,7 +112,7 @@ class ResultsVisualizer:
 
         ax.plot(T_range, tau, 'purple', linewidth=2)
         ax.fill_between(T_range, tau, alpha=0.3, color='purple')
-        ax.axvline(300, color='red', linestyle='--', label='Body temp (300K)')
+        ax.axvline(313, color='red', linestyle='--', label='Avian Body Temp (313 K)')
         ax.axvline(280, color='green', linestyle='--', label='Optimal (280K)')
 
         ax.set_xlabel('Temperature (K)', fontsize=12)
@@ -158,7 +158,7 @@ class ResultsVisualizer:
         colors = plt.cm.viridis(np.linspace(0, 0.8, len(mechanisms)))
 
         bars = ax.bar(mechanisms, np.log10(rates), color=colors)
-        ax.set_ylabel('Decoherence Rate (log₁₀ s⁻¹)', fontsize=12)
+        ax.set_ylabel('Decoherence Rate (log$_{10}$ s$^{-1}$)', fontsize=12)
         ax.set_title('B) Decoherence Mechanisms', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
 
@@ -179,14 +179,14 @@ class ResultsVisualizer:
         # 4. Temperature Dependence
         ax = axes[1, 0]
         T_range = np.linspace(200, 400, 100)
-        tau = 100 * np.exp(-(T_range - 280)**2 / (2 * 60**2))
+        tau = 100 * np.exp(-(T_range - 313)**2 / (2 * 60**2))
 
         ax.plot(T_range, tau, 'purple', linewidth=2)
         ax.fill_between(T_range, tau, alpha=0.3, color='purple')
-        ax.axvline(310, color='orange', linestyle='--', label='Bird body temp')
+        ax.axvline(313, color='orange', linestyle='--', label='Body temp (313 K)')
         ax.set_xlabel('Temperature (K)', fontsize=12)
         ax.set_ylabel('Coherence Time (μs)', fontsize=12)
-        ax.set_title('D) Biological Temperature', fontsize=14, fontweight='bold')
+        ax.set_title('D) Temperature Dependence', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -236,7 +236,7 @@ class ResultsVisualizer:
         N = np.arange(1, 101)
 
         ax.plot(N, N, 'b--', label='SQL (N)', linewidth=2)
-        ax.plot(N, N**2, 'r-', label='HSL (N²)', linewidth=2)
+        ax.plot(N, N**2, 'r-', label='Theoretical Quantum Limit', linewidth=2)
         ax.plot(N, 0.5 * N**2, 'g:', label='Practical', linewidth=2)
 
         ax.set_xlabel('Resources N', fontsize=12)
@@ -283,24 +283,28 @@ class ResultsVisualizer:
 
         # 4. Optimal States
         ax = axes[1, 0]
-        states = ['Sep.', 'Ent.', 'GHZ$_4$', 'NOON$_4$']
-        enhancement = [1, 2, 16, 16]
+        states = ['Sep.', 'Weakly Entangled']
+        enhancement = [1, 1.2]
 
         colors = plt.cm.plasma(np.linspace(0.2, 0.8, len(states)))
         bars = ax.bar(states, enhancement, color=colors, alpha=0.8)
+        
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height}', ha='center', va='bottom')
+                    
         ax.set_ylabel('QFI Enhancement', fontsize=12)
         ax.set_title('D) Probe States', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
 
-        # 5. Sensing Chain
+        # 5. Sensing Chain (Only Quantum)
         ax = axes[1, 1]
-        stages = ['Quantum', 'Transduction', 'Neural', 'Total']
-        efficiencies = [1.0, 0.3, 0.5, 0.15]
-        rates = [1e10, 1e10 * 0.3, 1e10 * 0.15, 1e10 * 0.15]
+        stages = ['Quantum QFI']
+        rates = [1e10]
 
-        bars = ax.barh(stages, np.log10(rates), color=plt.cm.coolwarm(
-            np.linspace(0.2, 0.8, len(stages))), alpha=0.8)
-        ax.set_xlabel('log₁₀(QFI rate)', fontsize=12)
+        bars = ax.barh(stages, np.log10(rates), color='blue', alpha=0.8)
+        ax.set_xlabel('log$_{10}$(QFI rate)', fontsize=12)
         ax.set_title('E) Sensing Chain', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='x')
 
@@ -313,7 +317,7 @@ class ResultsVisualizer:
         ax.plot(gamma / 1e6, F_Q / 1e9, 'purple', linewidth=2)
         ax.fill_between(gamma / 1e6, F_Q / 1e9, alpha=0.3, color='purple')
         ax.set_xlabel('Dephasing Rate (MHz)', fontsize=12)
-        ax.set_ylabel('F$_Q$ (×10⁹)', fontsize=12)
+        ax.set_ylabel('F$_Q$ ($\\times 10^9$)', fontsize=12)
         ax.set_title('F) Noise Sensitivity', fontsize=14, fontweight='bold')
         ax.set_xscale('log')
         ax.grid(True, alpha=0.3)
@@ -344,7 +348,7 @@ class ResultsVisualizer:
 
         ax.set_xlabel('Heading Angle (degrees)', fontsize=12)
         ax.set_ylabel('Signal (%)', fontsize=12)
-        ax.set_title('A) Angular Response', fontsize=14, fontweight='bold')
+        ax.set_title('(a) Angular Response', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -358,7 +362,7 @@ class ResultsVisualizer:
 
         ax.set_xlabel('Magnetic Field (μT)', fontsize=12)
         ax.set_ylabel('Signal (%)', fontsize=12)
-        ax.set_title('B) Field Sensitivity', fontsize=14, fontweight='bold')
+        ax.set_title('(b) Field Sensitivity', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -377,34 +381,27 @@ class ResultsVisualizer:
 
         ax.set_xlabel('Latitude (degrees)', fontsize=12)
         ax.set_ylabel('Response (%)', fontsize=12)
-        ax.set_title('C) Inclination Compass', fontsize=14, fontweight='bold')
+        ax.set_title('(c) Inclination Compass', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
-        # 4. Transduction Efficiency
+        # 4. Transduction Efficiency (Removed)
         ax = axes[1, 0]
-        stages = ['Quantum', 'Protein', 'Neural', 'Total']
-        efficiencies = [100, 30, 50, 15]
-
-        colors = plt.cm.RdYlGn(np.linspace(0.3, 0.9, len(stages)))
-        bars = ax.bar(stages, efficiencies, color=colors, alpha=0.8)
-        ax.set_ylabel('Efficiency (%)', fontsize=12)
-        ax.set_title('D) Transduction Chain', fontsize=14, fontweight='bold')
-        ax.grid(True, alpha=0.3, axis='y')
+        ax.remove()
 
         # 5. RF Disruption
         ax = axes[1, 1]
-        freq = np.linspace(0.5, 2, 1000)  # GHz
+        freq = np.linspace(0.5, 2, 1000)  # MHz
         f_res = 1.4  # Resonance at 50 μT
 
         for gamma in [0.1, 0.5, 1]:
             disruption = gamma**2 / ((freq - f_res)**2 + gamma**2)
             ax.plot(freq, disruption, label=f'γ={gamma}', linewidth=2)
 
-        ax.axvline(f_res, color='red', linestyle='--', label=f'f={f_res} GHz')
-        ax.set_xlabel('Frequency (GHz)', fontsize=12)
+        ax.axvline(f_res, color='red', linestyle='--', label=f'f={f_res} MHz')
+        ax.set_xlabel('Frequency (MHz)', fontsize=12)
         ax.set_ylabel('Disruption', fontsize=12)
-        ax.set_title('E) RF Disruption', fontsize=14, fontweight='bold')
+        ax.set_title('(d) RF Field Disruption', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -420,7 +417,7 @@ class ResultsVisualizer:
         ax.axhline(10, color='green', linestyle='--', label='SNR=10')
         ax.set_xlabel('Number of Photons', fontsize=12)
         ax.set_ylabel('SNR', fontsize=12)
-        ax.set_title('F) Signal-to-Noise Ratio', fontsize=14, fontweight='bold')
+        ax.set_title('(e) Signal-to-Noise Ratio', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
         ax.set_xscale('log')
@@ -451,7 +448,7 @@ class ResultsVisualizer:
         ax.fill_between(time_us * 1e6, mutual_info, alpha=0.3, color='blue')
         ax.set_xlabel('Time (μs)', fontsize=12)
         ax.set_ylabel('Mutual Information (bits)', fontsize=12)
-        ax.set_title('A) Mutual Information', fontsize=14, fontweight='bold')
+        ax.set_title('(a) Mutual Information', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3)
 
         # 2. Quantum Discord Dynamics
@@ -462,7 +459,7 @@ class ResultsVisualizer:
         ax.fill_between(time_us * 1e6, discord * 100, alpha=0.3, color='orange')
         ax.set_xlabel('Time (μs)', fontsize=12)
         ax.set_ylabel('Discord (bits)', fontsize=12)
-        ax.set_title('B) Quantum Discord', fontsize=14, fontweight='bold')
+        ax.set_title('(b) Quantum Discord', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3)
 
         # 3. Channel Capacity
@@ -474,25 +471,13 @@ class ResultsVisualizer:
         ax.fill_between(B_range * 1e6, capacity, alpha=0.3, color='green')
         ax.set_xlabel('Magnetic Field (μT)', fontsize=12)
         ax.set_ylabel('Capacity (bits/cycle)', fontsize=12)
-        ax.set_title('C) Channel Capacity', fontsize=14, fontweight='bold')
+        ax.set_title('(c) Channel Capacity', fontsize=14, fontweight='bold')
+        ax.set_ylim(1.48, 1.55)
         ax.grid(True, alpha=0.3)
 
-        # 4. Information Flow
+        # 4. Information Flow (Removed)
         ax = axes[1, 0]
-        stages = ['Photon', 'CRY', 'RP', 'Protein', 'Neural']
-        flow = [1e7, 1e5, 7e4, 2e4, 1e4]
-        efficiency = [100, 1, 70, 30, 50]
-
-        fig2, ax2 = plt.subplots(figsize=(8, 6))
-        bars = ax2.barh(stages, np.log10(flow), color=plt.cm.viridis(
-            np.linspace(0.2, 0.8, len(stages))), alpha=0.8)
-
-        for i, (f, e) in enumerate(zip(flow, efficiency)):
-            ax2.text(np.log10(f) + 0.1, i, f'{f:.0e} ({e}%)', va='center')
-
-        ax2.set_xlabel('Information Flow (bits/s, log₁₀)', fontsize=12)
-        ax2.set_title('D) Navigation Circuit', fontsize=14, fontweight='bold')
-        ax2.grid(True, alpha=0.3, axis='x')
+        ax.remove()
 
         # 5. Thermodynamic Cost
         ax = axes[1, 1]
@@ -504,7 +489,7 @@ class ResultsVisualizer:
         ax.axhline(50, color='green', linestyle='--', label='ATP cost')
         ax.set_xlabel('Information (bits)', fontsize=12)
         ax.set_ylabel('Energy Cost (zJ)', fontsize=12)
-        ax.set_title('E) Thermodynamic Cost', fontsize=14, fontweight='bold')
+        ax.set_title('(d) Thermodynamic Cost', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -518,7 +503,7 @@ class ResultsVisualizer:
         ax.axvline(310, color='orange', linestyle='--', label='Body temp')
         ax.set_xlabel('Temperature (K)', fontsize=12)
         ax.set_ylabel('Capacity (bits/cycle)', fontsize=12)
-        ax.set_title('F) Temperature Optimization', fontsize=14, fontweight='bold')
+        ax.set_title('(e) Temperature Optimization', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
 
@@ -543,10 +528,10 @@ class ResultsVisualizer:
         dim_classical = 2**(2 + n_nuclei)
         dim_quantum = (2 + n_nuclei)**2
 
-        ax.plot(n_nuclei, np.log2(dim_classical), 'b-', label='Classical (2ⁿ)', linewidth=2)
-        ax.plot(n_nuclei, np.log2(dim_quantum), 'r--', label='Quantum (n²)', linewidth=2)
+        ax.plot(n_nuclei, np.log2(dim_classical), 'b-', label='Classical ($2^n$)', linewidth=2)
+        ax.plot(n_nuclei, np.log2(dim_quantum), 'r--', label='Quantum ($n^2$)', linewidth=2)
         ax.set_xlabel('Number of Nuclei', fontsize=12)
-        ax.set_ylabel('log₂(Dimension)', fontsize=12)
+        ax.set_ylabel('log$_2$(Dimension)', fontsize=12)
         ax.set_title('A) Hilbert Space Scaling', fontsize=14, fontweight='bold')
         ax.legend()
         ax.grid(True, alpha=0.3)
@@ -580,21 +565,11 @@ class ResultsVisualizer:
         ax.legend()
         ax.grid(True, alpha=0.3)
 
-        # 4. Resource Requirements
+        # 4. Resource Requirements (Removed)
         ax = axes[1, 1]
-        target_precision = [1, 5, 10]  # degrees
+        ax.remove()
 
-        for target in target_precision:
-            n_needed = 1 / ((target * np.pi / 180)**2 * 4 * (1.4e6)**2)
-            ax.axhline(n_needed, linestyle='--', alpha=0.5, label=f'{target}°')
-
-        ax.set_ylabel('Required Measurements', fontsize=12)
-        ax.set_title('D) Precision Requirements', fontsize=14, fontweight='bold')
-        ax.set_yscale('log')
-        ax.legend()
-        ax.grid(True, alpha=0.3)
-
-        plt.suptitle('Quantum Advantage Analysis', fontsize=16, fontweight='bold', y=1.02)
+        plt.suptitle('Classical Simulation Overhead for Multi-Nuclear Spin Systems', fontsize=16, fontweight='bold', y=1.02)
         plt.tight_layout()
 
         if save_path:
@@ -670,7 +645,7 @@ class ResultsVisualizer:
             ax5.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
                     f'{f:.0e}', ha='center', fontsize=9)
 
-        ax5.set_ylabel('log₁₀(bits/s)')
+        ax5.set_ylabel('log$_{10}$(bits/s)')
         ax5.set_title('E) Navigation Circuit Information Flow', fontweight='bold')
         ax5.grid(True, alpha=0.3, axis='y')
 
@@ -872,7 +847,7 @@ def generate_comprehensive_results():
         'quantum_discord_bits': {'min': 0.01, 'max': 0.1},
         'atp_equivalent_per_bit': 0.3,
         'optimal_temperature_K': 280,
-        'biological_temperature_K': 310,
+        'biological_temperature_K': 313,
     }
 
     exporter.export_to_json(results_summary, 'experimental_parameters')
@@ -951,4 +926,3 @@ def generate_comprehensive_results():
 
 if __name__ == "__main__":
     figures = generate_comprehensive_results()
-    plt.show()
