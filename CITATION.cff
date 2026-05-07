@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Sheikder"
+    given-names: "Chandan"
+title: "Quantum Theory of the Navigation"
+version: 1.0.0
+doi: 10.5281/zenodo.20049835
+date-released: 2026-05-07
+url: "https://github.com/Chandan118/Quantum-Theory-of-the-Navigation"
