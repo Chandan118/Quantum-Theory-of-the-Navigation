@@ -464,15 +464,36 @@ class ResultsVisualizer:
 
         # 3. Channel Capacity
         ax = axes[0, 2]
-        B_range = np.linspace(25, 65, 100) * 1e-6
-        capacity = 1.5 * (1 + 1e-6 * (B_range * 1e6)**2)
+        B_range = np.linspace(25, 65, 100)  # μT
+        
+        # 1. Update base temperature to exactly 313 K
+        T_body = 313
+        
+        # 2. Recalculate new coherence time at T_body
+        tau_c = 100 * np.exp(-(T_body - 313)**2 / (2 * 60**2))
+        
+        # Effective radical pair measurements per coherence time
+        N_effective = 114.7 * (tau_c / 100.0)
+        
+        # 3. Plot new curves for θ=0°, 45°, 90°
+        colors = ['blue', 'green', 'red']
+        for (theta, label), color in zip([(0, '0°'), (45, '45°'), (90, '90°')], colors):
+            # Recalculate the singlet yield
+            singlet_yield = 0.25 + 0.004 * (B_range / 50)**2 * np.cos(2 * np.radians(theta)) * (tau_c / 100.0)
+            
+            # Recalculate Signal-to-Noise Ratio (SNR)
+            snr = singlet_yield * np.sqrt(N_effective)
+            
+            # Recalculate Channel Capacity
+            capacity = 0.5 * np.log2(1 + snr**2)
+            
+            ax.plot(B_range, capacity, color=color, label=f'θ={label}', linewidth=2)
 
-        ax.plot(B_range * 1e6, capacity, 'green', linewidth=2)
-        ax.fill_between(B_range * 1e6, capacity, alpha=0.3, color='green')
         ax.set_xlabel('Magnetic Field (μT)', fontsize=12)
         ax.set_ylabel('Capacity (bits/cycle)', fontsize=12)
         ax.set_title('(c) Channel Capacity', fontsize=14, fontweight='bold')
-        ax.set_ylim(1.48, 1.55)
+        ax.set_ylim(1.47, 1.56)
+        ax.legend()
         ax.grid(True, alpha=0.3)
 
         # 4. Information Flow (Removed)
