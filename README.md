@@ -86,7 +86,7 @@ The simulations utilize a rigorously parameterized spin Hamiltonian:
 
 ## 📝 Citation
 
-If this computational framework assists your research, please refer to the primary manuscript detailed in `PNAS_Manuscript_QuantumCompass.md` and our Zenodo repository: [https://doi.org/10.5281/zenodo.20049835](https://doi.org/10.5281/zenodo.20049835).
+If this computational framework assists your research, please refer to our Zenodo repository: [https://doi.org/10.5281/zenodo.20049835](https://doi.org/10.5281/zenodo.20049835).
 
 ## 🤝 Authors & Acknowledgments
 
